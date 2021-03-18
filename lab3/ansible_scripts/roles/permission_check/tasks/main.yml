@@ -1,0 +1,37 @@
+---
+
+- name: Check /home/lab3 folder permission
+  ansible.builtin.file:
+    path: /home/lab3
+    owner: lab3
+    group: lab3
+    mode: '0711'
+  check_mode: yes
+  register: result
+  failed_when: result.changed == true
+  tags:
+    - permission_check
+
+- name: Check /home/lab3/Shared folder permission
+  ansible.builtin.file:
+    path: /home/lab3/Shared
+    owner: lab3
+    group: lab3
+    mode: '0755'
+  check_mode: yes
+  register: result
+  failed_when: result.changed == true
+  tags:
+    - permission_check
+
+- name: Check /home/lab3/Collection
+  ansible.builtin.file:
+    path: /home/lab3/Collection
+    owner: lab3
+    group: lab3
+    mode: '0700'
+  check_mode: yes
+  register: result
+  failed_when: result.changed == true
+  tags:
+    - permission_check

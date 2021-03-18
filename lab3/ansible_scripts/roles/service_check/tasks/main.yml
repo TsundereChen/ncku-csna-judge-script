@@ -1,0 +1,46 @@
+---
+
+- name: Stop the service lab3.service
+  ansible.builtin.systemd:
+    name: lab3
+    state: stopped
+  tags:
+    - service_check
+
+- name: Start the service lab3.service
+  ansible.builtin.systemd:
+    name: lab3
+    state: started
+  tags:
+    - service_check
+
+- name: Restart the service lab3.service
+  ansible.builtin.systemd:
+    name: lab3
+    state: restarted
+  tags:
+    - service_check
+
+- name: Enable the service lab3.service
+  ansible.builtin.systemd:
+    name: lab3
+    enabled: yes
+  tags:
+    - service_check
+
+- name: Reboot the server
+  reboot:
+    reboot_timeout: 600
+  tags:
+    - service_check
+
+- name: Check if lab3.service is running
+  ansible.builtin.systemd:
+    name: lab3
+    state: started
+  check_mode: yes
+  register: result
+  failed_when: result.changed == true
+  tags:
+    - service_check
+

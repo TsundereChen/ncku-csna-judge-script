@@ -1,0 +1,13 @@
+---
+
+- hosts: all
+  become: no
+  roles:
+    - user_check
+    - permission_check
+
+- hosts: all
+  become: yes
+  gather_facts: no
+  roles:
+    - service_check

@@ -1,0 +1,21 @@
+---
+
+- name: Check if user lab3 exists
+  ansible.builtin.user:
+    name: lab3
+    state: present
+  check_mode: yes
+  register: result
+  failed_when: result.changed == true
+  tags:
+    - user_check
+
+- name: Check login shell of user lab3
+  ansible.builtin.user:
+    name: lab3
+    shell: /usr/sbin/nologin
+  check_mode: yes
+  register: result
+  failed_when: result.changed == true
+  tags:
+    - user_check
