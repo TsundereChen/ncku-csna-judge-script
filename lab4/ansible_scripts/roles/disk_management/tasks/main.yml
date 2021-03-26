@@ -1,0 +1,43 @@
+---
+
+- name: Create partition /dev/vdb1
+  raw: lsblk /dev/vdb1 | grep part
+  register: lsblk_vdb1_output
+  failed_when: lsblk_vdb1_output.stdout.find('part') == -1
+  tags:
+    - disk_management
+
+- name: Create partition /dev/vdb2
+  raw: lsblk /dev/vdb2 | grep part
+  register: lsblk_vdb2_output
+  failed_when: lsblk_vdb2_output.stdout.find('part') == -1
+  tags:
+    - disk_management
+
+- name: Create partition /dev/vdc1
+  raw: lsblk /dev/vdc1 | grep part
+  register: lsblk_vdc1_output
+  failed_when: lsblk_vdc1_output.stdout.find('part') == -1
+  tags:
+    - disk_management
+
+- name: Create partition /dev/vdc2
+  raw: lsblk /dev/vdc2 | grep part
+  register: lsblk_vdc2_output
+  failed_when: lsblk_vdc2_output.stdout.find('part') == -1
+  tags:
+    - disk_management
+
+- name: Check if /dev/md exists
+  raw: cat /proc/mdstat | grep md
+  register: proc_mdstat_output
+  failed_when: proc_mdstat_output.stdout.find('md') == -1
+  tags:
+    - disk_management
+
+- name: Check mount
+  raw: /usr/bin/mount | grep /dev/md
+  register: mount_output
+  failed_when: mount_output.stdout.find('/mnt/raid1') == -1
+  tags:
+    - disk_management

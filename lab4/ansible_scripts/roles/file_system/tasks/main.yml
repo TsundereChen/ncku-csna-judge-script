@@ -1,0 +1,25 @@
+---
+
+- name: Check if zpool ncku-nasa exists
+  become: yes
+  raw: zpool list | grep ncku-nasa
+  register: zpool_list
+  failed_when: zpool_list.stdout == ""
+  tags:
+    - file_system
+
+- name: Check if zpool contains vdb and vdc
+  become: yes
+  raw: zpool status ncku-nasa | grep vd*
+  register: zpool_status
+  failed_when: zpool_status.stdout == ""
+  tags:
+    - file_system
+
+- name: Check if zfs uses lz4 compression
+  become: yes
+  raw: zfs get compress | grep lz4
+  register: zfs_compress
+  failed_when: zfs_compress.stdout == ""
+  tags:
+    - file_system

@@ -1,0 +1,7 @@
+---
+
+- hosts: all
+  become: no
+  roles:
+    - disk_management
+    - file_system
