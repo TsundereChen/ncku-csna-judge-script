@@ -1,0 +1,29 @@
+---
+
+- name: Check /lab6/task1
+  raw: cat /lab6/task1
+  register: task1_output
+  failed_when: task1_output.stdout.find('NASA{WOW_YOU_GET_FLAG}') == -1
+  tags:
+    - cron_check
+
+- name: Check /lab6/task2
+  raw: cat /lab6/task2
+  register: task2_output
+  failed_when: task2_output.stdout.find('NASA{gotosleepplease}') == -1
+  tags:
+    - cron_check
+
+- name: Check /lab6/task3
+  raw: cat /lab6/task3
+  register: task3_output
+  failed_when: task3_output.stdout.find('NASA{don_t_lie_to_me_you_send_request_by_yourself}') == -1
+  tags:
+    - cron_check
+
+- name: Check /lab6/task4
+  raw: cat /lab6/task4
+  register: task4_output
+  failed_when: task4_output.stdout.find('NASA{I_m_not_a_robot}') == -1
+  tags:
+    - cron_check
