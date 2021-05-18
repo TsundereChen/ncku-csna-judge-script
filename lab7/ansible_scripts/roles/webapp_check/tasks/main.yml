@@ -1,0 +1,237 @@
+---
+
+- name: Pair.1 SET key hello
+  uri:
+    url: http://127.0.0.1/set/hello
+    method: POST
+    body_format: form-urlencoded
+    body:
+      value: World
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.1 GET key hello
+  uri:
+    url: http://127.0.0.1/get/hello
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "'World' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.2 SET key vivy
+  uri:
+    url: http://127.0.0.1/set/vivy
+    method: POST
+    body_format: form-urlencoded
+    body:
+      value: '好看'
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.2 GET key vivy
+  uri:
+    url: http://127.0.0.1/get/vivy
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "'好看' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.3 SET key space x
+  uri:
+    url: http://127.0.0.1/set/space%20X
+    method: POST
+    body_format: form-urlencoded
+    body:
+      value: 'mars'
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.3 GET key space x
+  uri:
+    url: http://127.0.0.1/get/space%20X
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "'mars' not in this.content"
+  tags:
+    - webapp_check
+
+
+- name: Pair.4 SET key blank
+  uri:
+    url: http://127.0.0.1/set/blank
+    method: POST
+    body_format: form-urlencoded
+    body:
+      value: ''
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.4 GET key blank
+  uri:
+    url: http://127.0.0.1/get/blank
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "this.content != ''"
+  tags:
+    - webapp_check
+
+- name: Pair.5 SET key 中文來坑你了
+  uri:
+    url: http://127.0.0.1/set/%E4%B8%AD%E6%96%87%E4%BE%86%E5%9D%91%E4%BD%A0%E4%BA%86
+    method: POST
+    body_format: form-urlencoded
+    body:
+      value: '%0A%E0%B9%84%E0%B8%95%E0%B9%89%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%99%20%5Cn%5Cn%20%5Ct%5Ct%0A%0Ai%5C%2F%3C%3E%3F%2C.%2F%3A%27%22%3B%40%23%24%25%5E%26%29%28%2B-%60~%7C%D0%A2%D0%B0%D0%B9%D0%B2%D0%B0%D0%BD%D1%8C'
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.5 GET key 中文來坑你了
+  uri:
+    url: http://127.0.0.1/get/%E4%B8%AD%E6%96%87%E4%BE%86%E5%9D%91%E4%BD%A0%E4%BA%86
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "'%0A%E0%B9%84%E0%B8%95%E0%B9%89%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%99%20%5Cn%5Cn%20%5Ct%5Ct%0A%0Ai%5C%2F%3C%3E%3F%2C.%2F%3A%27%22%3B%40%23%24%25%5E%26%29%28%2B-%60~%7C%D0%A2%D0%B0%D0%B9%D0%B2%D0%B0%D0%BD%D1%8C' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.6 SET key %0A%E0%B9%84%E0%B8%95%E0%B9%89%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%99%20%5Cn%5Cn%20%5Ct%5Ct%0A%0Ai%5C%2F%3C%3E%3F%2C.%2F%3A%27%22%3B%40%23%24%25%5E%26%29%28%2B-%60~%7C%D0%A2%D0%B0%D0%B9%D0%B2%D0%B0%D0%BD%D1%8C
+  uri:
+    url: http://127.0.0.1/set/%0A%E0%B9%84%E0%B8%95%E0%B9%89%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%99%20%5Cn%5Cn%20%5Ct%5Ct%0A%0Ai%5C%2F%3C%3E%3F%2C.%2F%3A%27%22%3B%40%23%24%25%5E%26%29%28%2B-%60~%7C%D0%A2%D0%B0%D0%B9%D0%B2%D0%B0%D0%BD%D1%8C
+    method: POST
+    body_format: form-urlencoded
+    body:
+      value: '中文來坑你了'
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.6 GET key %0A%E0%B9%84%E0%B8%95%E0%B9%89%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%99%20%5Cn%5Cn%20%5Ct%5Ct%0A%0Ai%5C%2F%3C%3E%3F%2C.%2F%3A%27%22%3B%40%23%24%25%5E%26%29%28%2B-%60~%7C%D0%A2%D0%B0%D0%B9%D0%B2%D0%B0%D0%BD%D1%8C
+  uri:
+    url: http://127.0.0.1/get/%0A%E0%B9%84%E0%B8%95%E0%B9%89%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%99%20%5Cn%5Cn%20%5Ct%5Ct%0A%0Ai%5C%2F%3C%3E%3F%2C.%2F%3A%27%22%3B%40%23%24%25%5E%26%29%28%2B-%60~%7C%D0%A2%D0%B0%D0%B9%D0%B2%D0%B0%D0%BD%D1%8C
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "'中文來坑你了' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.7 SET key "$HOME"
+  uri:
+    url: http://127.0.0.1/set/%24HOME
+    method: POST
+    body_format: form-urlencoded
+    body:
+      value: '還敢直接開目錄給人存阿'
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.7 GET key "$HOME"
+  uri:
+    url: http://127.0.0.1/get/%24HOME
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "'還敢直接開目錄給人存阿' not in this.content"
+  tags:
+    - webapp_check
+
+
+- name: Pair.8 SET key "'OR 1=1 --"
+  uri:
+    url: http://127.0.0.1/set/%27OR%201%3D1%20--
+    method: POST
+    body_format: form-urlencoded
+    body:
+      value: 'sql is good'
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.8 GET key "'OR 1=1 --"
+  uri:
+    url: http://127.0.0.1/get/%27OR%201%3D1%20--
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "'sql is good' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.9 SET key 中文來坑你了
+  uri:
+    url: http://127.0.0.1/set/%E4%B8%AD%E6%96%87%E4%BE%86%E5%9D%91%E4%BD%A0%E4%BA%86
+    method: POST
+    body_format: form-urlencoded
+    body:
+      value: '940uiorwefjsdklvxcm,4riwejofklsdnm,v.xc'
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.9 GET key 中文來坑你了
+  uri:
+    url: http://127.0.0.1/get/%E4%B8%AD%E6%96%87%E4%BE%86%E5%9D%91%E4%BD%A0%E4%BA%86
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "'940uiorwefjsdklvxcm,4riwejofklsdnm,v.xc' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.10 SET key qtweyuriqtwyueirqtwiyeurgafhkjdsb89p3ywreuifhsdjkc899pr3;whejkfds.n'p[]\][p[]\[po[]\[p]\[p[]\\[poi983p4ugryebhidflj nskdclpl[weo[0egr98uhid jnklmdas;p[wqeo0djnv mc<br><script><\script>dfovjweoirup4fw8iuvp389rwoieufhlsjdkvuqiwehladfjksb
+  uri:
+    url: http://127.0.0.1/set/qtweyuriqtwyueirqtwiyeurgafhkjdsb89p3ywreuifhsdjkc899pr3%3Bwhejkfds.n%27p%5B%5D%5C%5D%5Bp%5B%5D%5C%5Bpo%5B%5D%5C%5Bp%5D%5C%5Bp%5B%5D%5C%5C%5Bpoi983p4ugryebhidflj%20nskdclpl%5Bweo%5B0egr98uhid%20jnklmdas%3Bp%5Bwqeo0djnv%20mc%3Cbr%3E%3Cscript%3E%3C%5Cscript%3Edfovjweoirup4fw8iuvp389rwoieufhlsjdkvuqiwehladfjksb
+    method: POST
+    body_format: form-urlencoded
+    headers:
+      Content-Type: application/x-www-form-urlencoded
+    body:
+      value: "\nไต้หวัน\nТайвань\n\r\\n\\t\\t\t';\":?/`~.,-=><}{)(||"
+    return_content: yes
+  register: this
+  failed_when: "'OK' not in this.content"
+  tags:
+    - webapp_check
+
+- name: Pair.10 GET key qtweyuriqtwyueirqtwiyeurgafhkjdsb89p3ywreuifhsdjkc899pr3;whejkfds.n'p[]\][p[]\[po[]\[p]\[p[]\\[poi983p4ugryebhidflj nskdclpl[weo[0egr98uhid jnklmdas;p[wqeo0djnv mc<br><script><\script>dfovjweoirup4fw8iuvp389rwoieufhlsjdkvuqiwehladfjksb
+  uri:
+    url: http://127.0.0.1/get/qtweyuriqtwyueirqtwiyeurgafhkjdsb89p3ywreuifhsdjkc899pr3%3Bwhejkfds.n%27p%5B%5D%5C%5D%5Bp%5B%5D%5C%5Bpo%5B%5D%5C%5Bp%5D%5C%5Bp%5B%5D%5C%5C%5Bpoi983p4ugryebhidflj%20nskdclpl%5Bweo%5B0egr98uhid%20jnklmdas%3Bp%5Bwqeo0djnv%20mc%3Cbr%3E%3Cscript%3E%3C%5Cscript%3Edfovjweoirup4fw8iuvp389rwoieufhlsjdkvuqiwehladfjksb
+    method: GET
+    return_content: yes
+  register: this
+  failed_when: "'\\nไต้หวัน\\nТайвань\\n\\r\\\\n\\\\t\\\\t\\t\\';\":?/`~.,-=><}{)(||' not in this.content"
+  tags:
+    - webapp_check
+
+
